@@ -4,7 +4,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class OperatorMainPage {
@@ -39,17 +41,24 @@ public class OperatorMainPage {
     static HBox operatorInfo = new HBox();
 
     static TableView operatorTable = new TableView();
-    static TableColumn <Driver, String> driverID  = new TableColumn<>("Driver ID");
-    static TableColumn <Driver, String> driverNameColumn  = new TableColumn<>("Driver Name");
-    static TableColumn <Driver, String> driverPhoneColumn  = new TableColumn<>("Driver Phone");
-    static TableColumn <Driver, String> driverWorkHoursColumn  = new TableColumn<>("Driver Work Hours");
-    static TableColumn <Driver, String> driverLocation = new TableColumn<>("Driver Location");
+    static TableColumn <Driver, String> driverIDColumn = new TableColumn<>("ID");
+    static TableColumn <Driver, String> driverNameColumn  = new TableColumn<>("Name");
+    static TableColumn <Driver, String> driverPhoneColumn  = new TableColumn<>("Phone");
+    static TableColumn <Driver, String> driverWorkHoursColumn  = new TableColumn<>("Work Hours");
+    static TableColumn <Driver, String> driverLocationColumn = new TableColumn<>("Location");
+    static TableColumn <Driver, String> driverAvailabilityColumn = new TableColumn<>("Is Available?");
+    static TableColumn <Driver, String> driverExpectedAvailabilityTimeColumn = new TableColumn<>("Expected Availability Time");
+    static TableColumn <Driver, String> driverIsWorkingColumn = new TableColumn<>("Is Working?");
 
 
 
+    static StackPane operatorTablePane = new StackPane();
+
+    static VBox operatorInfoAndTable = new VBox();
 
 
-    static Scene operatorMainPage = new Scene(operatorInfo, 960, 720);
+
+    static Scene operatorMainPage = new Scene(operatorInfoAndTable, 960, 720);
 
 
 
@@ -87,12 +96,31 @@ public class OperatorMainPage {
         operatorPhoneEmailDOBHours.setSpacing(20);
 
         operatorInfo.getChildren().addAll(operatorNameAndAddress, operatorPhoneEmailDOBHours);
-
-        driverID.setCellValueFactory(new PropertyValueFactory<>("driverID"));
-
         operatorInfo.setAlignment(Pos.TOP_CENTER);
-        operatorInfo.setPadding(new Insets(30, 30, 30, 30));
         operatorInfo.setSpacing(50);
+
+        driverIDColumn.setCellValueFactory(new PropertyValueFactory<>("driverID"));
+        driverNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        driverPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        driverWorkHoursColumn.setCellValueFactory(new PropertyValueFactory<>("workHours"));
+        driverWorkHoursColumn.setPrefWidth(120);
+        driverLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        driverAvailabilityColumn.setCellValueFactory(new PropertyValueFactory<>("isAvailable"));
+        driverExpectedAvailabilityTimeColumn.setCellValueFactory(new PropertyValueFactory<>("expectedAvailabilityTime"));
+        driverExpectedAvailabilityTimeColumn.setPrefWidth(200);
+        driverIsWorkingColumn.setCellValueFactory(new PropertyValueFactory<>("isWorking"));
+        driverIsWorkingColumn.setPrefWidth(100);
+
+
+        operatorTable.getColumns().addAll(driverIDColumn, driverNameColumn, driverPhoneColumn, driverWorkHoursColumn, driverLocationColumn, driverAvailabilityColumn, driverExpectedAvailabilityTimeColumn, driverIsWorkingColumn);
+
+        operatorTablePane.getChildren().add(operatorTable);
+
+        operatorInfoAndTable.getChildren().addAll(operatorInfo, operatorTablePane);
+        operatorInfoAndTable.setSpacing(20);
+
+
+        operatorInfoAndTable.setPadding(new Insets(30, 30, 30, 30));
     }
 
 
